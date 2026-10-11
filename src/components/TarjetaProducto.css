@@ -1,0 +1,157 @@
+/* La tarjeta ya no tiene caja ni borde: es una placa con la foto y, debajo,
+   el texto directamente sobre el fondo negro. Lo que ordena la grilla son las
+   placas, todas del mismo tamaño. */
+.tarjeta {
+  /* Flexbox en columna: la placa arriba y el texto abajo. */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Placa de la foto ------------------------------------------------------ */
+
+.tarjeta-foto {
+  /* relative: permite ubicar la etiqueta "Oferta" y la foto tomando esta caja
+     como referencia. */
+  position: relative;
+  /* aspect-ratio 1 la hace siempre cuadrada, tenga o no foto. Así todas las
+     placas miden lo mismo y la página no "salta" mientras cargan las imágenes. */
+  aspect-ratio: 1;
+  /* overflow hidden recorta la foto para que respete las esquinas redondeadas. */
+  overflow: hidden;
+
+  /* Centra el contenido en la placa (la inicial, cuando no hay foto). */
+  display: grid;
+  place-items: center;
+
+  /* El fondo de la placa: un degradado en diagonal, del azul del local a un
+     tono un poco más claro. Es lo que se ve mientras la foto termina de
+     cargar, y también cuando el producto todavía no tiene foto. */
+  background: linear-gradient(
+    150deg,
+    var(--color-acento),
+    color-mix(in srgb, var(--color-acento) 78%, var(--color-texto))
+  );
+  border-radius: var(--radio);
+}
+
+.tarjeta-foto img {
+  /* absolute + inset: 0 estira la imagen hasta los cuatro bordes de la placa.
+     Hace falta porque la altura de la placa sale del aspect-ratio, y un
+     "height: 100%" común no se resuelve bien contra una altura así. */
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* cover: la foto LLENA toda la placa sin deformarse. Si la foto no es
+     cuadrada, se recorta lo que sobra (de los costados o de arriba y abajo),
+     tomando siempre el centro. Queda mejor con fotos sacadas en el local;
+     para que no se corte nada importante, conviene que el producto esté
+     centrado en la foto. */
+  object-fit: cover;
+}
+
+.tarjeta-inicial {
+  font-family: var(--fuente-titulos);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--color-acento-claro);
+}
+
+.tarjeta-etiqueta {
+  /* absolute: se ubica respecto de la placa, arriba a la izquierda. */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+
+  padding: 3px 10px;
+  border-radius: 999px; /* un valor enorme la deja con forma de píldora */
+
+  /* Negra con texto blanco: se lee sobre cualquier foto, clara u oscura. */
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* --- Texto ---------------------------------------------------------------- */
+
+.tarjeta-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  /* flex: 1 hace que el cuerpo ocupe todo el alto que sobra. Como las
+     tarjetas de una misma fila miden igual, los precios quedan alineados. */
+  flex: 1;
+  padding: 0 2px;
+}
+
+.tarjeta-marca {
+  color: var(--color-suave);
+  font-size: 0.78rem;
+}
+
+.tarjeta-nombre {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.tarjeta-descripcion {
+  /* flex: 1 empuja el precio al fondo de la tarjeta, aunque la descripción sea corta. */
+  flex: 1;
+  color: var(--color-suave);
+  font-size: 0.82rem;
+}
+
+.tarjeta-precios {
+  /* El precio anterior y el actual, uno al lado del otro; si no entran, bajan. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline; /* alineados por la base de las letras, aunque tengan distinto tamaño */
+  gap: 0 8px;
+  margin-top: 8px;
+}
+
+.tarjeta-precio-anterior {
+  color: var(--color-suave);
+  font-size: 0.82rem;
+}
+
+.tarjeta-precio {
+  font-size: 1.12rem;
+  font-weight: 700;
+  /* Todos los números con el mismo ancho: los precios quedan parejos entre sí. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* "Consultar precio" no es un precio: va más discreto que un número. */
+.tarjeta-consultar {
+  color: var(--color-acento-claro);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* --- Acción --------------------------------------------------------------- */
+
+/* El botón "Agregar", el control de cantidad o el enlace "Consultar". Los
+   tres miden 44px de alto, así la tarjeta no cambia de tamaño al pasar de
+   uno a otro. Los estilos de .boton están en index.css. */
+.tarjeta-accion {
+  margin-top: 12px;
+}
+
+/* --- Sin stock ------------------------------------------------------------ */
+
+/* Lo que hay dentro de la placa se ve apagado. Se aplica a la imagen y a la
+   inicial, no a toda la placa, para que la etiqueta "Sin stock" siga nítida. */
+.tarjeta-sin-stock .tarjeta-foto img,
+.tarjeta-sin-stock .tarjeta-inicial {
+  opacity: 0.4;
+}
+
+/* Y el texto del producto pasa todo a gris. */
+.tarjeta-sin-stock .tarjeta-nombre,
+.tarjeta-sin-stock .tarjeta-precio {
+  color: var(--color-suave);
+}

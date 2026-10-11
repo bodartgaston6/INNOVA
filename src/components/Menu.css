@@ -1,0 +1,52 @@
+.menu {
+  /* Los enlaces uno debajo del otro. */
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+}
+
+.menu-enlace {
+  /* relative: la marca de "estás acá" se ubica respecto de cada enlace. */
+  position: relative;
+  /* Zona táctil amplia: el renglón entero se puede tocar. */
+  padding: 16px 20px 16px 24px;
+
+  font-family: var(--fuente-titulos);
+  font-size: 1.15rem;
+  line-height: 1.25;
+  text-decoration: none;
+
+  /* Los que no son la pantalla actual van en gris. */
+  color: var(--color-suave);
+}
+
+/* La pantalla en la que se está: blanco pleno. */
+.menu-enlace[aria-current='page'] {
+  color: var(--color-texto);
+}
+
+/* Y una línea vertical a la izquierda, igual a la que marca la categoría
+   activa en la barra de productos. ::before crea un elemento decorativo sin
+   tener que escribirlo en el JSX. */
+.menu-enlace[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+
+  background: var(--color-texto);
+  border-radius: 2px;
+  box-shadow: 0 0 14px 2px var(--color-acento-claro);
+}
+
+.menu-pie {
+  /* margin-top: auto lo empuja al fondo del panel. */
+  margin-top: auto;
+  padding: 20px 24px 28px;
+  border-top: 1px solid var(--color-linea);
+
+  color: var(--color-suave);
+  font-size: 0.85rem;
+}

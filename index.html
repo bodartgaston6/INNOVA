@@ -1,0 +1,34 @@
+<!doctype html>
+<!--
+  Este es el ÚNICO archivo HTML del proyecto. React no usa una página por
+  pantalla: carga este archivo casi vacío y dibuja todo adentro con JavaScript.
+-->
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- El ícono de la pestaña. Todo lo que está en la carpeta /public se sirve desde la raíz. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Hace que en el celular la página ocupe el ancho real de la pantalla (sin esto se ve "alejada"). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Título y descripción son lo que muestra Google y lo que aparece cuando
+      se comparte el link por WhatsApp. Van escritos acá, a mano, porque esto
+      se lee ANTES de que arranque React. Cambialos por los datos del local.
+    -->
+    <title>innova.applestore · Especialistas en tecnología</title>
+    <meta
+      name="description"
+      content="Especialistas en tecnología. Mirá el catálogo y hacé tu pedido por WhatsApp."
+    />
+  </head>
+  <body>
+    <!-- La "caja" vacía donde React va a dibujar toda la aplicación (ver src/main.jsx). -->
+    <div id="root"></div>
+
+    <!-- El punto de entrada del JavaScript. type="module" permite usar import/export. -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+/* La franja que contiene la fila y queda fija. */
+.categorias-franja {
+  /* sticky con top igual al alto del encabezado: se pega justo debajo de él. */
+  position: sticky;
+  top: var(--alto-encabezado);
+  /* Por encima de los productos, pero por debajo del encabezado (que tiene 20). */
+  z-index: 10;
+
+  /* Mismo fondo translúcido que el encabezado. */
+  background: color-mix(in srgb, var(--color-fondo) 90%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.categorias {
+  /* relative: la línea de abajo se ubica tomando esta fila como referencia. */
+  position: relative;
+  /* Flex en fila: los nombres van uno al lado del otro. */
+  display: flex;
+  gap: 4px;
+
+  /* Mismo ancho máximo y márgenes que el contenido, para que queden alineados. */
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 8px;
+
+  /* Si no entran todos, la fila se desliza hacia el costado en vez de partirse
+     en dos renglones. */
+  overflow-x: auto;
+  /* Oculta la barra de desplazamiento (se sigue pudiendo deslizar con el dedo). */
+  scrollbar-width: none;
+}
+
+.categorias-boton {
+  /* flex: none evita que los botones se achiquen para entrar. */
+  flex: none;
+  /* Zona táctil generosa: al menos 44px de alto, cómoda para el dedo. */
+  padding: 12px 8px 14px;
+
+  /* Sin caja: solo el texto. El borde y el fondo se los sacamos al botón. */
+  border: 0;
+  background: none;
+
+  /* Las que no están activas van en gris; se leen, pero no compiten. */
+  color: var(--color-suave);
+  /* Los botones no heredan la tipografía de la página por defecto. */
+  font: inherit;
+  font-size: 0.95rem;
+  white-space: nowrap; /* "Vidrios templados" no se parte en dos renglones */
+  cursor: pointer; /* la manito al pasar el mouse */
+
+  /* El cambio de color es gradual, acompañando a la línea que se desliza. */
+  transition: color 0.25s ease;
+}
+
+/* La categoría activa: blanco pleno. El selector con corchetes apunta al
+   botón que tiene ese atributo (lo pone el JSX). */
+.categorias-boton[aria-current='true'] {
+  color: var(--color-texto);
+}
+
+/* La línea que marca la activa y se desliza de una categoría a otra. */
+.categorias-linea {
+  /* absolute: pegada al borde de abajo de la fila, arrancando desde la izquierda.
+     El ancho y el corrimiento los pone el JavaScript con "style". */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+
+  background: var(--color-texto);
+  border-radius: 2px;
+  /* Un resplandor azul alrededor, como una luz encendida. */
+  box-shadow: 0 0 14px 2px var(--color-acento-claro);
+
+  /* Esto es lo que hace que se deslice en vez de aparecer de golpe: cuando
+     cambian el corrimiento o el ancho, el navegador anima el cambio. */
+  transition:
+    transform 0.35s cubic-bezier(0.3, 0.7, 0.2, 1),
+    width 0.35s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+/* Para quienes pidieron menos animaciones en su dispositivo: sin transiciones. */
+@media (prefers-reduced-motion: reduce) {
+  .categorias-boton,
+  .categorias-linea {
+    transition: none;
+  }
+}

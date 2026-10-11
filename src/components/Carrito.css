@@ -1,0 +1,102 @@
+/* --- Carrito vacío --------------------------------------------------------- */
+
+.carrito-vacio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 28px 20px;
+}
+
+/* El botón, separado del texto. */
+.carrito-vacio .boton {
+  margin-top: 16px;
+}
+
+/* Texto de ayuda, chico y gris. Se usa también en el pie. */
+.carrito-ayuda {
+  color: var(--color-suave);
+  font-size: 0.85rem;
+}
+
+/* --- Lista ---------------------------------------------------------------- */
+
+.carrito-lista {
+  /* Una lista (<ul>) trae viñetas, margen y sangría del navegador. Se los sacamos. */
+  list-style: none;
+  margin: 0;
+  padding: 0 20px;
+
+  /* Ocupa el espacio libre y empuja el pie hacia el fondo del panel. */
+  flex: 1;
+}
+
+.carrito-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.carrito-item-nombre {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.carrito-item-precio {
+  color: var(--color-suave);
+  font-size: 0.85rem;
+}
+
+.carrito-item-acciones {
+  /* El control de cantidad a la izquierda y el subtotal a la derecha. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Dentro del carrito el control no ocupa todo el ancho: mide lo justo. */
+.carrito-item-acciones .cantidad {
+  width: 132px;
+}
+
+.carrito-item-subtotal {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums; /* números del mismo ancho, quedan alineados */
+}
+
+/* --- Pie: total y acciones ------------------------------------------------- */
+
+.carrito-pie {
+  /* sticky con bottom: 0 lo deja pegado al borde de abajo del panel mientras
+     la lista se desliza por detrás. El total y el botón de enviar quedan
+     siempre a la vista, aunque haya muchos productos. */
+  position: sticky;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px 20px;
+
+  background: var(--color-fondo);
+  border-top: 1px solid var(--color-linea);
+}
+
+.carrito-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.carrito-total strong {
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.carrito-pie .carrito-ayuda {
+  text-align: center;
+  font-size: 0.78rem;
+}

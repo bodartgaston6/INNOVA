@@ -1,0 +1,36 @@
+/* El diseño se piensa primero para el celular: los estilos de base son los
+   de pantalla chica y las "media queries" de abajo los ajustan para pantallas
+   más grandes. A eso se le dice "mobile first". */
+.catalogo {
+  /* CSS Grid acomoda los hijos en filas y columnas. */
+  display: grid;
+  /* Dos valores: separación entre filas (28px) y entre columnas (12px). Entre
+     filas va más, porque ahí está el texto de cada producto. */
+  gap: 28px 12px;
+
+  /* 2 columnas del mismo ancho. minmax(0, 1fr) significa "repartí el espacio
+     en partes iguales, y dejá que la columna se achique si hace falta"; sin
+     el 0, un nombre largo podría ensanchar la columna y romper la grilla. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Desde 700px de ancho (tablets): 3 columnas. */
+@media (min-width: 700px) {
+  .catalogo {
+    gap: 36px 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Desde 1000px (computadoras): 4 columnas. */
+@media (min-width: 1000px) {
+  .catalogo {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.catalogo-vacio {
+  padding: 32px 0;
+  color: var(--color-suave);
+  text-align: center;
+}

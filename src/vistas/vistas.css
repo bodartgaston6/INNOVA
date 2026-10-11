@@ -1,0 +1,97 @@
+/* --------------------------------------------------------------------------
+   ESTILOS DE LAS PANTALLAS DE TEXTO
+   Compartidos por Contacto y por Horarios y ubicación.
+   -------------------------------------------------------------------------- */
+
+/* Las dos clases pegadas (.contenido.vista) apuntan al elemento que tiene
+   AMBAS. Se escribe así para que estas reglas le ganen con seguridad a las de
+   .contenido, que define otro ancho máximo en index.css. */
+.contenido.vista {
+  /* Estas pantallas son de lectura: un ancho menor que el del catálogo hace
+     que los renglones no queden larguísimos en una computadora. */
+  max-width: 640px;
+  padding-top: 32px;
+}
+
+.vista-titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 400; /* Michroma tiene un solo grosor */
+  /* clamp(mínimo, ideal, máximo): el tamaño acompaña al ancho de la pantalla. */
+  font-size: clamp(1.4rem, 6.5vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+
+  /* La misma línea que tienen los títulos de las categorías. */
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid;
+  border-image: linear-gradient(to right, var(--color-acento-claro), transparent) 1;
+}
+
+.vista-bajada {
+  color: var(--color-suave);
+  margin-bottom: 24px;
+}
+
+.vista-bloque {
+  margin-bottom: 36px;
+}
+
+.vista-subtitulo {
+  margin-bottom: 12px;
+  color: var(--color-suave);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.vista-direccion {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+/* Los botones de una pantalla, uno debajo del otro. */
+.vista-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vista-nota {
+  margin-top: 28px;
+  color: var(--color-suave);
+  font-size: 0.92rem;
+}
+
+/* --- Horarios -------------------------------------------------------------- */
+
+.horarios {
+  margin: 0; /* <dl> trae margen del navegador */
+}
+
+.horarios-fila {
+  /* Los días a la izquierda y las horas a la derecha. */
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.horarios-fila dd {
+  margin: 0; /* <dd> trae una sangría del navegador */
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums; /* números del mismo ancho */
+}
+
+/* --- Mapa ------------------------------------------------------------------ */
+
+.mapa {
+  /* display: block evita un pequeño espacio que queda debajo de un iframe. */
+  display: block;
+  width: 100%;
+  height: 280px;
+  margin-bottom: 16px;
+  border: 0; /* el iframe trae borde del navegador */
+  border-radius: var(--radio);
+}

@@ -1,0 +1,37 @@
+.seccion {
+  /* El espacio va ARRIBA y por dentro (padding, no margin): así, cuando se
+     salta a una sección, el título queda con aire debajo de la barra fija. */
+  padding-top: 32px;
+}
+
+.seccion-cabecera {
+  /* El título a la izquierda y la cantidad a la derecha, en el mismo renglón. */
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; /* alineados por la base de las letras */
+  gap: 12px;
+
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+
+  /* Una línea debajo que arranca en azul y se desvanece hacia la derecha.
+     border-image permite usar un degradado como borde. */
+  border-bottom: 1px solid;
+  border-image: linear-gradient(to right, var(--color-acento-claro), transparent) 1;
+}
+
+.seccion-titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 400; /* Michroma tiene un solo grosor */
+  /* clamp(mínimo, ideal, máximo): el tamaño acompaña al ancho de la pantalla
+     (5.5vw = 5,5% del ancho) sin pasarse de los límites. */
+  font-size: clamp(1.25rem, 5.5vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.seccion-cantidad {
+  flex: none; /* que no se achique ni se parta si el título es largo */
+  color: var(--color-suave);
+  font-size: 0.85rem;
+}

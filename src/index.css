@@ -1,0 +1,192 @@
+/* --------------------------------------------------------------------------
+   ESTILOS GENERALES
+   Lo que aplica a toda la página. Los estilos propios de cada componente
+   están en su archivo .css, al lado del .jsx.
+   -------------------------------------------------------------------------- */
+
+/* TIPOGRAFÍA DE LOS TÍTULOS
+   @font-face le enseña al navegador una tipografía que no viene instalada.
+   Michroma es de letras anchas, con el aire de los rótulos de los aparatos
+   electrónicos. El archivo está dentro del proyecto (public/fuentes), así la
+   página no depende de un servidor de terceros para mostrarla.
+   font-display: swap muestra el texto con una letra común mientras baja el
+   archivo, en lugar de dejarlo invisible. */
+@font-face {
+  font-family: 'Michroma';
+  src: url('/fuentes/michroma.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* :root es la etiqueta <html>. Acá se definen las variables de CSS que usa
+   todo el sitio. */
+:root {
+  /* Los tres colores del local. Estos valores son un respaldo: main.jsx los
+     pisa con los de config.js apenas carga la página. */
+  --color-fondo: #000000;
+  --color-texto: #ffffff;
+  --color-acento: #0b1b3f;
+
+  /* Tonos derivados. color-mix() mezcla dos colores en la proporción indicada,
+     así salen solos de los tres de arriba y no hay que elegirlos a mano. */
+
+  /* Texto secundario (marcas, descripciones): el blanco "apagado" hacia el fondo. */
+  --color-suave: color-mix(in srgb, var(--color-texto) 62%, var(--color-fondo));
+  /* Azul más claro, para líneas y brillos que tienen que verse sobre el negro. */
+  --color-acento-claro: color-mix(in srgb, var(--color-acento) 45%, var(--color-texto));
+  /* Líneas divisorias, bien sutiles. */
+  --color-linea: color-mix(in srgb, var(--color-acento-claro) 35%, var(--color-fondo));
+
+  /* Las dos tipografías. system-ui es la letra del propio celular: no hay que
+     descargarla y se lee muy bien en textos chicos. */
+  --fuente-titulos: 'Michroma', system-ui, sans-serif;
+  --fuente-texto: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --radio: 18px; /* redondeo de las placas de las fotos */
+
+  /* El alto del encabezado. Está en una variable porque lo usan tres lugares:
+     el encabezado, la barra de categorías (que se pega justo debajo) y la
+     cabecera de los paneles. */
+  --alto-encabezado: 56px;
+
+  /* Le avisa al navegador que la página es oscura, para que dibuje oscuros
+     también sus propios elementos (por ejemplo, la barra de desplazamiento). */
+  color-scheme: dark;
+}
+
+/* Con border-box, el ancho de un elemento YA incluye su padding y su borde.
+   Evita que las cosas se pasen del ancho de la pantalla. */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Reserva siempre el lugar de la barra de desplazamiento. Sin esto, en una
+     computadora la página se correría unos píxeles cada vez que se abre un
+     panel (porque al bloquear el scroll la barra desaparece). */
+  scrollbar-gutter: stable;
+}
+
+/* Mientras haya un panel abierto (el menú o el carrito), la página de atrás
+   no se desliza. :has() permite escribir "el html que contiene un dialog abierto". */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+body {
+  margin: 0; /* el navegador le pone margen por defecto; lo sacamos */
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--fuente-texto);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* Sacamos los márgenes que el navegador les pone a títulos y párrafos, para
+   controlar los espacios nosotros desde cada componente. */
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+/* El recuadro que aparece al moverse con el teclado (tecla Tab). Lo dejamos
+   bien visible: es la única forma de saber dónde estás sin usar el mouse.
+   :focus-visible aparece con teclado y no al tocar con el dedo o el mouse. */
+:focus-visible {
+  outline: 2px solid var(--color-texto);
+  outline-offset: 3px;
+}
+
+/* Los enlaces heredan el color del texto que los rodea, en lugar del azul
+   subrayado que les pone el navegador. */
+a {
+  color: inherit;
+}
+
+/* --- Botones --------------------------------------------------------------
+   Estilos compartidos por todos los botones de la página. Se combinan dos
+   clases: "boton" (la forma) más una variante (el color):
+       className="boton boton-principal"
+   Sirven tanto para <button> como para <a>, porque algunas acciones son
+   enlaces (ir a WhatsApp) y tienen que verse igual que un botón. */
+
+.boton {
+  /* Centra el texto, también cuando es un <a>. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  /* 44px de alto mínimo: cómodo para tocar con el dedo. */
+  min-height: 44px;
+  padding: 8px 16px;
+
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: none;
+
+  /* Los botones no heredan la tipografía de la página por defecto. */
+  font: inherit;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* La acción más importante de una pantalla: blanco pleno con texto negro. */
+.boton-principal {
+  background: var(--color-texto);
+  color: var(--color-fondo);
+}
+
+/* Acción común: solo el contorno. */
+.boton-secundario {
+  border-color: var(--color-texto);
+  color: var(--color-texto);
+}
+
+/* Acción de menor peso: contorno apenas visible y texto gris. */
+.boton-tenue {
+  border-color: var(--color-linea);
+  color: var(--color-suave);
+}
+
+/* Acción mínima: se ve como un texto subrayado. */
+.boton-texto {
+  min-height: 36px;
+  color: var(--color-suave);
+  font-weight: 400;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+/* Un botón que solo tiene un ícono (menú, carrito, cerrar). */
+.boton-icono {
+  /* 44 x 44: el ícono mide 24, el resto es zona táctil. */
+  width: 44px;
+  height: 44px;
+  flex: none;
+
+  /* Centra el ícono. */
+  display: grid;
+  place-items: center;
+
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--color-texto);
+  cursor: pointer;
+}
+
+/* --- Estructura de la página ---------------------------------------------- */
+
+/* El contenido principal: centrado y con un ancho máximo, para que en una
+   computadora no se estire de punta a punta. */
+.contenido {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px 16px 64px;
+}

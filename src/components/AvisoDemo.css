@@ -1,0 +1,18 @@
+.aviso-demo {
+  margin-top: 16px;
+  padding: 10px 14px;
+
+  /* Un recuadro discreto, con el azul del local de fondo. Tiene que verse,
+     pero sin competir con los productos. */
+  background: color-mix(in srgb, var(--color-acento) 55%, var(--color-fondo));
+  border: 1px solid var(--color-linea);
+  border-radius: 12px;
+
+  color: var(--color-suave);
+  font-size: 0.88rem;
+}
+
+/* La palabra "Demo." resaltada en blanco. */
+.aviso-demo strong {
+  color: var(--color-texto);
+}

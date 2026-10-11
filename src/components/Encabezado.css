@@ -1,0 +1,82 @@
+.encabezado {
+  /* sticky: se queda pegado arriba mientras se baja por la página. */
+  position: sticky;
+  top: 0;
+  /* z-index alto para que quede por encima de todo el contenido. */
+  z-index: 20;
+
+  /* La altura sale de una variable (definida en index.css) porque la barra de
+     categorías la necesita para saber dónde pegarse, justo debajo. */
+  height: var(--alto-encabezado);
+
+  /* Fondo casi opaco, con un desenfoque de lo que pasa por detrás. */
+  background: color-mix(in srgb, var(--color-fondo) 90%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px); /* el mismo, para Safari más viejo */
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.encabezado-interior {
+  /* En fila: menú a la izquierda, nombre en el medio, carrito a la derecha. */
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  /* Mismo ancho máximo que el contenido, para que queden alineados. */
+  max-width: 1100px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 6px;
+}
+
+.encabezado-nombre {
+  /* flex: 1 hace que el nombre ocupe todo el espacio libre entre los dos botones. */
+  flex: 1;
+  /* min-width: 0 le permite achicarse; si no, un nombre largo empujaría al
+     carrito fuera de la pantalla. */
+  min-width: 0;
+
+  font-family: var(--fuente-titulos);
+  font-weight: 400; /* Michroma tiene un solo grosor */
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+
+  /* Si el nombre no entra en un renglón, se corta con puntos suspensivos. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.encabezado-nombre a {
+  /* Que el enlace no se vea como enlace: sin subrayado. */
+  text-decoration: none;
+}
+
+.encabezado-carrito {
+  /* relative: el contador se ubica tomando este botón como referencia. */
+  position: relative;
+}
+
+.encabezado-contador {
+  /* absolute: en la esquina de arriba a la derecha del botón. */
+  position: absolute;
+  top: 3px;
+  right: 1px;
+
+  /* Un círculo que se estira a píldora si el número tiene dos cifras. */
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+
+  /* Centra el número. */
+  display: grid;
+  place-items: center;
+
+  /* Blanco con número negro: lo más visible que hay sobre el fondo oscuro. */
+  background: var(--color-texto);
+  color: var(--color-fondo);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+}

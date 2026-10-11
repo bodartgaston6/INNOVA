@@ -1,0 +1,37 @@
+.cantidad {
+  /* Los tres elementos en fila: botón, número, botón. */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* Mismo alto y mismos bordes que el botón "Agregar", para que al
+     reemplazarlo la tarjeta no cambie de tamaño. */
+  height: 44px;
+  border: 1px solid var(--color-texto);
+  border-radius: 12px;
+}
+
+.cantidad-boton {
+  /* Cuadrados de 44px: el tamaño mínimo cómodo para tocar con el dedo. */
+  width: 44px;
+  height: 100%;
+  flex: none;
+
+  /* Centra el ícono. */
+  display: grid;
+  place-items: center;
+
+  border: 0;
+  background: none;
+  color: var(--color-texto);
+  cursor: pointer;
+}
+
+.cantidad-numero {
+  /* Ancho mínimo fijo, así el control no "baila" al pasar de 9 a 10. */
+  min-width: 2ch; /* ch = el ancho de un carácter */
+  text-align: center;
+  font-weight: 700;
+  /* Todos los números con el mismo ancho. */
+  font-variant-numeric: tabular-nums;
+}

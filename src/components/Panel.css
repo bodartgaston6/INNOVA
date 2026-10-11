@@ -1,0 +1,122 @@
+/* El <dialog> trae estilos propios del navegador (centrado, con borde y
+   márgenes). Los pisamos para convertirlo en una hoja pegada a un costado.
+
+   OJO: al <dialog> NO se le pone "display". El navegador lo oculta cuando
+   está cerrado usando display: none, y si lo cambiáramos quedaría siempre a
+   la vista. Por eso el contenido va dentro de .panel-interior, que es donde
+   se arma la disposición. */
+.panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  /* Casi todo el ancho en el celular, con un tope para pantallas grandes.
+     min() elige el menor de los dos valores. */
+  width: min(88vw, 400px);
+  max-width: none;
+  /* dvh es el alto REAL visible del celular, que cambia cuando aparece o se
+     esconde la barra de direcciones del navegador. */
+  height: 100dvh;
+  max-height: none;
+
+  background: var(--color-fondo);
+  color: var(--color-texto);
+
+  /* La animación de entrada y salida: el panel se desliza desde su costado.
+     Las dos últimas líneas le indican al navegador que espere a que termine
+     el deslizamiento antes de ocultarlo del todo al cerrar. */
+  transition:
+    transform 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+    display 0.3s allow-discrete,
+    overlay 0.3s allow-discrete;
+}
+
+/* --- Según el lado -------------------------------------------------------- */
+
+.panel-izquierda {
+  left: 0;
+  right: auto;
+  border-right: 1px solid var(--color-linea);
+  /* Cerrado: corrido hacia afuera de la pantalla, a la izquierda. */
+  transform: translateX(-100%);
+}
+
+.panel-derecha {
+  left: auto;
+  right: 0;
+  border-left: 1px solid var(--color-linea);
+  transform: translateX(100%);
+}
+
+/* Abierto: en su lugar. [open] es un atributo que el navegador le pone al
+   dialog mientras está abierto. */
+.panel[open] {
+  transform: translateX(0);
+}
+
+/* @starting-style define desde dónde arranca la animación en el instante en
+   que el panel aparece. Sin esto aparecería de golpe, ya en su lugar. Los
+   navegadores viejos lo ignoran y simplemente lo muestran sin animar. */
+@starting-style {
+  .panel-izquierda[open] {
+    transform: translateX(-100%);
+  }
+  .panel-derecha[open] {
+    transform: translateX(100%);
+  }
+}
+
+/* ::backdrop es el fondo que el navegador pone detrás de un dialog abierto. */
+.panel::backdrop {
+  background: rgb(0 0 0 / 0.65);
+}
+
+/* --- Contenido ------------------------------------------------------------ */
+
+.panel-interior {
+  /* Columna: la cabecera arriba y el cuerpo ocupando el resto. */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Misma altura que el encabezado de la página, para que coincidan al abrirse. */
+  height: var(--alto-encabezado);
+  flex: none; /* no se achica aunque el contenido sea largo */
+  padding: 0 6px 0 20px;
+  border-bottom: 1px solid var(--color-linea);
+}
+
+.panel-titulo {
+  font-family: var(--fuente-titulos);
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.panel-cuerpo {
+  /* Ocupa todo el alto que queda. */
+  flex: 1;
+  /* Si el contenido es más largo que la pantalla, se desliza solo esta parte. */
+  overflow-y: auto;
+  /* min-height: 0 es necesario para que un hijo de flex pueda achicarse y
+     mostrar su propio scroll, en vez de estirar al padre. */
+  min-height: 0;
+
+  /* Una columna, para que el carrito pueda empujar el total hacia abajo. */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Para quienes pidieron menos animaciones: el panel aparece sin deslizarse. */
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    transition: none;
+  }
+}
